@@ -5,7 +5,7 @@ This folder is the public customer-facing site for GitHub Pages.
 ## Files
 
 - `index.html` is the customer review page.
-- Do not upload the private link builder page here if you want the setup page to stay private.
+- `builder.html` is the link builder setup page. Only upload it if you are okay with the setup page being public.
 
 ## GitHub Pages URL
 
@@ -36,4 +36,10 @@ Customers only see the review page. They can select their massage experience, ge
 
 ## What You Keep Private
 
-Keep the link builder local on your computer, or host it privately somewhere else. It is not included in this GitHub Pages folder.
+If you upload `builder.html`, the setup page will be public at:
+
+```text
+https://yourname.github.io/review-assistant/builder.html
+```
+
+Anyone with that link can open the builder, so do not put private passwords, API keys, or sensitive business data in it.

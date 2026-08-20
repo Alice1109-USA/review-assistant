@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Review Link Builder</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f1e9;
+      color: #172323;
+      padding: 32px 18px;
+    }
+
+    main {
+      width: min(760px, 100%);
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.05;
+    }
+
+    p {
+      color: #60706e;
+      line-height: 1.6;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: 700;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      margin-top: 8px;
+      border: 1px solid #d8ddd4;
+      border-radius: 8px;
+      padding: 13px 14px;
+      font: inherit;
+      background: #fffdf8;
+      color: #172323;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      min-height: 54px;
+      border: 0;
+      border-radius: 8px;
+      background: #247266;
+      color: #fff;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .output {
+      margin-top: 22px;
+    }
+
+    .output textarea {
+      min-height: 118px;
+    }
+
+    .note {
+      margin-top: 10px;
+      color: #174d46;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Review Link Builder</h1>
+    <p>Create a custom NFC/QR link for each business. The generated link opens the customer review page, not this setup page.</p>
+
+    <label>
+      Customer review page URL
+      <input id="customerUrl" />
+    </label>
+
+    <label>
+      Business name
+      <input id="business" value="Signature Wellness" />
+    </label>
+
+    <label>
+      City
+      <input id="city" value="Redmond" />
+    </label>
+
+    <label>
+      Service
+      <input id="service" value="massage" />
+    </label>
+
+    <label>
+      Google review link
+      <input id="google" value="https://g.page/r/CcgP9gyLOERhEBM/review" />
+    </label>
+
+    <label>
+      Yelp review link
+      <input id="yelp" value="https://www.yelp.com/writeareview/biz/5yIEZCpypS9hDMYgxeOGkg?review_origin=review-feed-war-widget&rating=5" />
+    </label>
+
+    <label>
+      SEO keywords, one per line
+      <textarea id="keywords">massage in Redmond
+therapeutic massage in Redmond
+deep tissue massage
+neck and shoulder tension relief
+bodywork and stress relief
+wellness massage spot in Redmond</textarea>
+    </label>
+
+    <button id="build">Build Client Link</button>
+
+    <div class="output">
+      <label>
+        Client NFC / QR URL
+        <textarea id="result" readonly></textarea>
+      </label>
+      <button id="copy">Copy Link</button>
+      <button id="test">Open Test Link</button>
+      <div class="note" id="note"></div>
+    </div>
+  </main>
+
+  <script>
+    const fields = ["business", "city", "service", "google", "yelp", "keywords"];
+    const result = document.getElementById("result");
+    const note = document.getElementById("note");
+
+    function buildUrl() {
+      const customerUrl = document.getElementById("customerUrl").value.trim();
+      const base = new URL(customerUrl || "./massage_nfc_review.html", window.location.href);
+      const params = new URLSearchParams();
+
+      for (const id of fields) {
+        const value = document.getElementById(id).value.trim();
+        if (!value) continue;
+        params.set(id, id === "keywords" ? value.split("\n").map((line) => line.trim()).filter(Boolean).join("|") : value);
+      }
+
+      base.search = params.toString();
+      result.value = base.toString();
+      note.textContent = "Link ready.";
+    }
+
+    document.getElementById("customerUrl").value = new URL("./massage_nfc_review.html", window.location.href).toString();
+
+    document.getElementById("build").addEventListener("click", buildUrl);
+    document.getElementById("copy").addEventListener("click", async () => {
+      if (!result.value) buildUrl();
+      try {
+        await navigator.clipboard.writeText(result.value);
+        note.textContent = "Copied.";
+      } catch (error) {
+        result.select();
+        note.textContent = "Selected. Copy it manually.";
+      }
+    });
+    document.getElementById("test").addEventListener("click", () => {
+      if (!result.value) buildUrl();
+      window.open(result.value, "_blank", "noopener");
+    });
+
+    buildUrl();
+  </script>
+</body>
+</html>
