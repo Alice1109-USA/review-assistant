@@ -1,5 +1,15 @@
 {
   "clients": {
+    "41126393": {
+      "businessName": "Legend Massage Spa",
+      "city": "Bothell",
+      "service": "Massage",
+      "googleUrl": "https://g.page/r/CWg3n73aaC6oEBM/review",
+      "yelpUrl": "https://g.page/r/CWg3n73aaC6oEBM/review",
+      "keywords": [
+        "deep tissue, pain relief massage"
+      ]
+    },
     "74760410": {
       "businessName": "La Bella",
       "city": "Shoreline",
