@@ -1195,6 +1195,73 @@
       .actions { grid-template-columns: 1fr; }
       .action.review-card { min-height: 184px; }
     }
+
+    /* Mobile: compact identity banner, task visible in the first viewport */
+    @media (max-width: 860px) {
+      .visual {
+        min-height: min(330px, 42svh);
+        max-height: 330px;
+      }
+
+      .visual::before {
+        clip-path: none;
+        background:
+          radial-gradient(circle at 12% 5%, rgba(255, 190, 113, .88), transparent 36%),
+          radial-gradient(circle at 88% 12%, rgba(255, 102, 164, .58), transparent 38%),
+          radial-gradient(circle at 62% 92%, rgba(99, 91, 255, .42), transparent 42%),
+          linear-gradient(145deg, #fff8f1 0%, #eef4ff 100%);
+      }
+
+      .visual::after { display: none; }
+
+      .brand {
+        left: 24px;
+        right: 24px;
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+      }
+
+      .brand::before {
+        margin-bottom: 10px;
+        font-size: 10px;
+        letter-spacing: .14em;
+      }
+
+      .business-location {
+        margin-bottom: 8px;
+        font-size: 13px;
+      }
+
+      .brand h1 {
+        max-width: 12ch;
+        margin-bottom: 12px;
+        font-size: clamp(36px, 10vw, 48px);
+        line-height: 1;
+        letter-spacing: -.035em;
+      }
+
+      .brand > p:last-child {
+        max-width: 33ch;
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .panel { padding: 32px 20px 56px; }
+      h2 { font-size: clamp(30px, 8vw, 38px); }
+      .sub { font-size: 15px; line-height: 1.5; }
+      .question { margin-top: 22px; padding-top: 22px; }
+    }
+
+    @media (max-width: 420px) {
+      .visual {
+        min-height: min(285px, 38svh);
+        max-height: 285px;
+      }
+      .brand { left: 20px; right: 20px; }
+      .brand h1 { font-size: clamp(34px, 10vw, 42px); }
+      .brand > p:last-child { font-size: 13px; }
+    }
   </style>
 </head>
 <body>
