@@ -177,7 +177,7 @@
       gap: 10px;
     }
 
-    .mood-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .mood-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
     .choice,
     .action {
@@ -410,7 +410,7 @@
       .flow { max-width: none; }
       h2 { font-size: 26px; }
       .choice-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .mood-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .mood-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .mood-grid .choice { min-height: 48px; padding: 10px 6px; font-size: 13px; }
     }
 
@@ -575,7 +575,7 @@
     }
 
     .mood-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .choice {
@@ -736,7 +736,7 @@
       }
 
       .mood-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
       .mood-grid .choice {
@@ -1123,7 +1123,6 @@
             <button class="choice selected" data-value="great">Excellent</button>
             <button class="choice" data-value="good">Good</button>
             <button class="choice" data-value="okay">Okay</button>
-            <button class="choice" data-value="notgood">Not satisfied</button>
           </div>
         </section>
 
@@ -1394,19 +1393,6 @@
         openYelp.disabled = true;
         openYelp.style.display = "none";
         openGoogle.textContent = "Link Not Set Up";
-        return;
-      }
-
-      if (state.mood === "notgood") {
-        reviewText.value = "";
-        reviewText.disabled = true;
-        reviewText.placeholder = "Please tell our front desk what we can improve.";
-        feedbackNote.textContent = "Thank you for your honest feedback. Please talk with our front desk so we can make it right.";
-        feedbackNote.classList.add("show");
-        openGoogle.textContent = "Talk to Front Desk";
-        openGoogle.disabled = true;
-        openYelp.disabled = true;
-        openYelp.style.display = "none";
         return;
       }
 
