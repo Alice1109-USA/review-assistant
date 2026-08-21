@@ -84,6 +84,66 @@
       font-size: 14px;
       font-weight: 700;
     }
+    /* Soft blue and rose admin style */
+    body {
+      background: linear-gradient(160deg, #f7fbff 0%, #e9f6ff 48%, #edf4ff 100%);
+      color: #151922;
+      padding: 28px 18px;
+    }
+
+    main {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.86);
+      border-radius: 18px;
+      padding: clamp(22px, 4vw, 36px);
+      box-shadow: 0 18px 42px rgba(42, 78, 120, 0.1);
+    }
+
+    h1 {
+      color: #0f172a;
+      font-size: clamp(30px, 5vw, 42px);
+    }
+
+    p {
+      color: #64748b;
+    }
+
+    input,
+    textarea {
+      border-color: #d1d5db;
+      background: #ffffff;
+      color: #111827;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: 3px solid rgba(255, 47, 87, 0.14);
+      border-color: #ff2f57;
+    }
+
+    button {
+      background: linear-gradient(180deg, #ff4164, #f7244d);
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(247, 36, 77, 0.22);
+    }
+
+    #test {
+      background: #ffffff;
+      border: 1px solid #ff7b92;
+      color: #f7244d;
+    }
+
+    .note {
+      color: #f7244d;
+    }
+
+    #directLink {
+      display: block;
+      margin-top: 14px;
+      color: #f7244d;
+      font-weight: 800;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -140,6 +200,7 @@ wellness massage spot in Redmond</textarea>
       </label>
       <button id="copy">Copy Link</button>
       <button id="test">Open Test Link</button>
+      <a id="directLink" href="#" target="_blank" rel="noopener">Open generated link manually</a>
       <div class="note" id="note"></div>
     </div>
   </main>
@@ -151,7 +212,7 @@ wellness massage spot in Redmond</textarea>
 
     function buildUrl() {
       const customerUrl = document.getElementById("customerUrl").value.trim();
-      const base = new URL(customerUrl || "./massage_nfc_review.html", window.location.href);
+      const base = new URL(customerUrl || "./", window.location.href);
       const params = new URLSearchParams();
 
       for (const id of fields) {
@@ -162,10 +223,11 @@ wellness massage spot in Redmond</textarea>
 
       base.search = params.toString();
       result.value = base.toString();
+      document.getElementById("directLink").href = result.value;
       note.textContent = "Link ready.";
     }
 
-    document.getElementById("customerUrl").value = new URL("./massage_nfc_review.html", window.location.href).toString();
+    document.getElementById("customerUrl").value = "https://alice1109-usa.github.io/review-assistant/";
 
     document.getElementById("build").addEventListener("click", buildUrl);
     document.getElementById("copy").addEventListener("click", async () => {
@@ -180,7 +242,7 @@ wellness massage spot in Redmond</textarea>
     });
     document.getElementById("test").addEventListener("click", () => {
       if (!result.value) buildUrl();
-      window.open(result.value, "_blank", "noopener");
+      window.location.href = result.value;
     });
 
     buildUrl();
