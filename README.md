@@ -1,34 +1,38 @@
 # Massage Review Assistant - GitHub Pages Version
 
-This folder is the public customer-facing site for GitHub Pages.
+This folder is the public customer-facing site.
 
 ## Files
 
 - `index.html` is the customer review page.
-- `builder.html` is the link builder setup page. Only upload it if you are okay with the setup page being public.
+- `clients.json` stores the public business settings for short Vercel links.
+- `vercel.json` makes random-number subpages open the customer page on Vercel.
+- Keep `builder.html` local if you want the setup page to stay private.
 
-## GitHub Pages URL
+## Vercel URL
 
-If your GitHub username is `yourname` and the repository is named `review-assistant`, the customer URL will be:
-
-```text
-https://yourname.github.io/review-assistant/
-```
-
-Use that URL in your private link builder as:
+The public customer page is:
 
 ```text
-Customer review page URL = https://yourname.github.io/review-assistant/
+https://review-assistant-sigma.vercel.app/
 ```
 
-## Suggested Setup
+Each client can use a short random-number URL, for example:
 
-1. Create a GitHub repository named `review-assistant`.
-2. Upload `index.html` from this folder.
-3. In the repository, go to Settings > Pages.
-4. Set the source to the main branch and root folder.
-5. Wait for GitHub to publish the site.
-6. Copy the GitHub Pages URL into your private link builder.
+```text
+https://review-assistant-sigma.vercel.app/69785975
+```
+
+The random number is the company ID. The public page looks up that ID in `clients.json`.
+
+## Workflow
+
+1. Open your local `builder.html` file.
+2. Fill in the business name, city, Google review link, Yelp review link, and SEO keywords.
+3. Click `Save to List`.
+4. Click `Export clients.json for Vercel`.
+5. Replace the online `clients.json` file with the exported one.
+6. Use the short `Client NFC / QR URL` for the NFC tag or QR code.
 
 ## What Customers See
 
@@ -36,10 +40,4 @@ Customers only see the review page. They can select their massage experience, ge
 
 ## What You Keep Private
 
-If you upload `builder.html`, the setup page will be public at:
-
-```text
-https://yourname.github.io/review-assistant/builder.html
-```
-
-Anyone with that link can open the builder, so do not put private passwords, API keys, or sensitive business data in it.
+Keep the link builder local on your computer, or host it privately somewhere else. It is not included in this public folder.
