@@ -1102,32 +1102,43 @@
 
     /* Review destinations — compact final-step actions */
     .actions {
-      gap: 10px;
-      margin-top: 14px;
+      gap: 14px;
+      margin-top: 18px;
     }
 
     .action.review-card {
-      min-height: 76px;
+      min-height: 190px;
       margin-top: 0;
-      padding: 13px 14px;
+      padding: 22px;
       display: grid;
-      grid-template-columns: 34px minmax(0, 1fr) auto;
-      grid-template-rows: auto auto;
-      column-gap: 12px;
-      row-gap: 2px;
+      grid-template-columns: 48px minmax(0, 1fr);
+      grid-template-rows: auto auto 1fr;
+      column-gap: 14px;
+      row-gap: 4px;
       align-items: center;
       justify-items: start;
-      border-color: #dfe5ec;
-      border-radius: 10px;
-      background: #fff;
-      box-shadow: 0 2px 6px rgba(50, 50, 93, .06);
+      border: 2px solid #cbc8ff;
+      border-radius: 14px;
+      background: #f8f7ff;
+      box-shadow: 0 10px 26px rgba(79, 70, 229, .10);
       text-align: left;
     }
 
+    .action.review-card.yelp-action {
+      border-color: #ffc6cd;
+      background: #fff7f8;
+      box-shadow: 0 10px 26px rgba(245, 51, 63, .09);
+    }
+
     .action.review-card:hover {
-      transform: translateY(-1px);
-      border-color: #b8c3d1;
-      box-shadow: 0 8px 20px rgba(50, 50, 93, .11);
+      transform: translateY(-2px);
+      border-color: #9f99ff;
+      box-shadow: 0 16px 34px rgba(79, 70, 229, .16);
+    }
+
+    .action.review-card.yelp-action:hover {
+      border-color: #ff929e;
+      box-shadow: 0 16px 34px rgba(245, 51, 63, .14);
     }
 
     .review-card .logo-badge,
@@ -1135,43 +1146,54 @@
       position: static;
       grid-column: 1;
       grid-row: 1 / 3;
-      width: 34px;
-      height: 34px;
-      padding: 5px;
+      width: 48px;
+      height: 48px;
+      padding: 8px;
       transform: none;
-      border-radius: 8px;
+      border-radius: 12px;
       background: #fff;
-      box-shadow: inset 0 0 0 1px #e5e9ef;
+      box-shadow: inset 0 0 0 1px #dedcf8, 0 4px 10px rgba(50, 50, 93, .08);
     }
 
     .review-card .google-logo svg,
     .review-card .yelp-logo svg {
-      width: 24px;
-      height: 24px;
+      width: 32px;
+      height: 32px;
     }
 
-    .review-card .yelp-logo { background: #f5333f; box-shadow: none; padding: 4px; }
-    .review-card strong { grid-column: 2; grid-row: 1; align-self: end; font-size: 14px; line-height: 1.25; }
-    .review-card small { grid-column: 2; grid-row: 2; align-self: start; color: #697b8c; font-size: 11px; font-weight: 500; }
+    .review-card .yelp-logo { background: #f5333f; box-shadow: 0 4px 10px rgba(245,51,63,.18); padding: 8px; }
+    .review-card strong { grid-column: 2; grid-row: 1; align-self: end; font-size: 17px; line-height: 1.25; }
+    .review-card small { grid-column: 2; grid-row: 2; align-self: start; color: #61758a; font-size: 12px; line-height: 1.35; font-weight: 550; }
 
     .review-card .review-pill,
     .yelp-action .review-pill {
-      width: auto;
-      grid-column: 3;
-      grid-row: 1 / 3;
-      margin: 0;
-      padding: 7px 10px;
-      border-radius: 7px;
-      background: #f3f2ff;
-      color: #4f46e5;
-      box-shadow: none;
-      font-size: 12px;
-      font-weight: 700;
+      width: 100%;
+      min-height: 52px;
+      grid-column: 1 / -1;
+      grid-row: 3;
+      align-self: end;
+      margin: 18px 0 0;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9px;
+      background: #635bff;
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(99,91,255,.22);
+      font-size: 15px;
+      font-weight: 750;
+      pointer-events: none;
+    }
+
+    .yelp-action .review-pill {
+      background: #f5333f;
+      box-shadow: 0 8px 18px rgba(245,51,63,.20);
     }
 
     @media (max-width: 560px) {
       .actions { grid-template-columns: 1fr; }
-      .action.review-card { min-height: 72px; }
+      .action.review-card { min-height: 184px; }
     }
   </style>
 </head>
