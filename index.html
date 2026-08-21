@@ -810,7 +810,7 @@
       ]
     };
 
-    function readConfig() {
+    function readQueryConfig() {
       const params = new URLSearchParams(window.location.search);
       const keywordParam = params.get("keywords");
       const keywords = keywordParam
@@ -827,7 +827,40 @@
       };
     }
 
-    const config = readConfig();
+    function currentClientId() {
+      const parts = window.location.pathname.split("/").map((part) => part.trim()).filter(Boolean);
+      const lastPart = parts.at(-1) || "";
+      return /^\d+$/.test(lastPart) ? lastPart : "";
+    }
+
+    async function readConfig() {
+      const params = new URLSearchParams(window.location.search);
+      const hasQueryConfig = ["business", "city", "service", "google", "yelp", "keywords"].some((key) => params.has(key));
+      if (hasQueryConfig) return readQueryConfig();
+
+      const clientId = currentClientId();
+      if (!clientId) return readQueryConfig();
+
+      try {
+        const response = await fetch(`/clients.json?v=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error("Client registry unavailable");
+        const registry = await response.json();
+        const client = registry.clients?.[clientId];
+        if (!client) throw new Error("Client not found");
+        return {
+          businessName: client.businessName || DEFAULT_CONFIG.businessName,
+          city: client.city || DEFAULT_CONFIG.city,
+          service: client.service || DEFAULT_CONFIG.service,
+          googleUrl: client.googleUrl || DEFAULT_CONFIG.googleUrl,
+          yelpUrl: client.yelpUrl || DEFAULT_CONFIG.yelpUrl,
+          keywords: Array.isArray(client.keywords) && client.keywords.length ? client.keywords : DEFAULT_CONFIG.keywords
+        };
+      } catch (error) {
+        return readQueryConfig();
+      }
+    }
+
+    let config = { ...DEFAULT_CONFIG };
 
     const state = {
       mood: "great",
@@ -891,12 +924,14 @@
       "Very happy with the experience."
     ];
 
-    const localKeywordLines = config.keywords.map((keyword) => {
-      const phrase = keyword.toLowerCase();
-      if (phrase.includes(" in ")) return `It is a great option for ${keyword}.`;
-      if (phrase.includes("relief")) return `A good place for ${keyword}.`;
-      return `I would recommend it for ${keyword}.`;
-    });
+    function localKeywordLines() {
+      return config.keywords.map((keyword) => {
+        const phrase = keyword.toLowerCase();
+        if (phrase.includes(" in ")) return `It is a great option for ${keyword}.`;
+        if (phrase.includes("relief")) return `A good place for ${keyword}.`;
+        return `I would recommend it for ${keyword}.`;
+      });
+    }
 
     const reviewText = document.getElementById("reviewText");
     const copyNote = document.getElementById("copyNote");
@@ -931,7 +966,7 @@
       const focus = sentenceWithRelief(pick(focusLines, 1), relief);
       const detail = pick(detailLines, 2);
       const ending = pick(endingLines, 3);
-      const keyword = pick(localKeywordLines, 4);
+      const keyword = pick(localKeywordLines(), 4);
 
       const shapes = [
         `${mood}. ${focus} ${detail} ${keyword} ${ending}`,
@@ -1025,8 +1060,13 @@
       window.location.href = config.yelpUrl;
     });
 
-    heroTitle.textContent = `Feeling better at ${config.businessName}?`;
-    updateReview();
+    async function init() {
+      config = await readConfig();
+      heroTitle.textContent = `Feeling better at ${config.businessName}?`;
+      updateReview();
+    }
+
+    init();
   </script>
 </body>
 </html>
