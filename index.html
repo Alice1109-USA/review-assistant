@@ -1192,8 +1192,43 @@
     }
 
     @media (max-width: 560px) {
-      .actions { grid-template-columns: 1fr; }
-      .action.review-card { min-height: 184px; }
+      .actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .action.review-card {
+        min-width: 0;
+        min-height: 180px;
+        padding: 14px;
+        grid-template-columns: 40px minmax(0, 1fr);
+        column-gap: 10px;
+      }
+
+      .review-card .logo-badge,
+      .review-card .yelp-logo {
+        width: 40px;
+        height: 40px;
+        padding: 7px;
+        border-radius: 10px;
+      }
+
+      .review-card .google-logo svg,
+      .review-card .yelp-logo svg {
+        width: 26px;
+        height: 26px;
+      }
+
+      .review-card strong { font-size: 14px; }
+      .review-card small { font-size: 10px; line-height: 1.3; }
+
+      .review-card .review-pill,
+      .yelp-action .review-pill {
+        min-height: 48px;
+        margin-top: 14px;
+        padding: 12px 8px;
+        font-size: 14px;
+      }
     }
 
     /* Mobile: compact identity banner, task visible in the first viewport */
@@ -1565,7 +1600,7 @@
       feedbackNote.classList.remove("show");
       openGoogle.disabled = !config.googleUrl;
       openYelp.disabled = !config.yelpUrl;
-      openYelp.style.display = config.yelpUrl ? "inline-flex" : "none";
+      openYelp.style.display = config.yelpUrl ? "" : "none";
       openGoogle.className = "action review-card primary";
       openYelp.className = "action review-card yelp-action";
     }
