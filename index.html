@@ -1501,59 +1501,39 @@
 
     const moodLines = {
       great: [
-        "I had an excellent massage here today",
-        "This was one of the best massage experiences I've had",
-        "I left feeling so much better after today's session",
-        "Really happy with my massage today"
+        "Excellent massage today",
+        "I had a great massage",
+        "Really happy with my visit",
+        "I left feeling much better"
       ],
       good: [
-        "I had a very good massage experience today",
-        "The massage was relaxing and really helped",
-        "I had a good visit and felt cared for",
-        "This was a solid, comfortable massage experience"
+        "Very good massage",
+        "The massage was relaxing",
+        "I had a good experience",
+        "A comfortable, helpful session"
       ],
       okay: [
-        "My massage today was relaxing and helpful",
-        "I felt better after the session",
-        "The visit was comfortable and helped me relax",
-        "Overall, this was a nice and calming experience"
+        "A nice, relaxing massage",
+        "I felt better afterward",
+        "The visit was calm and comfortable",
+        "A pleasant massage experience"
       ]
     };
 
     const focusLines = [
-      "The therapist paid attention to {relief} and adjusted the pressure well.",
-      "I appreciated that they focused on {relief} without rushing.",
-      "The work on {relief} made a noticeable difference.",
-      "They spent the right amount of time on {relief}, which I really needed.",
-      "I came in feeling tight around {relief}, and I felt a clear improvement after."
-    ];
-
-    const detailLines = [
-      "The room was peaceful and clean.",
-      "The pressure felt comfortable and professional.",
-      "The staff was kind and easy to communicate with.",
-      "Everything felt calm, clean, and well organized.",
-      "The whole appointment felt smooth from start to finish.",
-      "It was a quiet, comfortable place to relax."
+      "The therapist focused on {relief}.",
+      "It really helped with {relief}.",
+      "I noticed a difference in {relief}.",
+      "The pressure was just right for {relief}.",
+      "I felt much less tension in {relief}."
     ];
 
     const endingLines = [
-      "I would definitely come back.",
-      "I would recommend this place to anyone needing a good massage.",
-      "I left feeling lighter and more relaxed.",
-      "I am glad I stopped in today.",
-      "I will be back again.",
-      "Very happy with the experience."
+      "I would come back.",
+      "Highly recommended.",
+      "I left feeling relaxed.",
+      "Very happy with the visit."
     ];
-
-    function localKeywordLines() {
-      return config.keywords.map((keyword) => {
-        const phrase = keyword.toLowerCase();
-        if (phrase.includes(" in ")) return `It is a great option for ${keyword}.`;
-        if (phrase.includes("relief")) return `A good place for ${keyword}.`;
-        return `I would recommend it for ${keyword}.`;
-      });
-    }
 
     const reviewText = document.getElementById("reviewText");
     const copyNote = document.getElementById("copyNote");
@@ -1587,17 +1567,15 @@
       const relief = joinEn(items);
       const mood = pick(moodLines[state.mood] || moodLines.great, 0);
       const focus = sentenceWithRelief(pick(focusLines, 1), relief);
-      const detail = pick(detailLines, 2);
-      const ending = pick(endingLines, 3);
-      const keyword = pick(localKeywordLines(), 4);
+      const ending = pick(endingLines, 2);
 
       const shapes = [
-        `${mood}. ${focus} ${detail} ${keyword} ${ending}`,
-        `${mood}, especially because it helped with ${relief}. ${detail} ${ending}`,
-        `${focus} ${mood}. ${keyword} ${detail} ${ending}`,
-        `${mood}. ${detail} I noticed real relief in ${relief}. ${keyword}`,
+        `${mood}. ${focus}`,
+        `${mood}, and it helped with ${relief}.`,
+        `${focus} ${ending}`,
+        `${mood}. ${ending}`,
         `${mood}. ${focus} ${ending}`,
-        `${mood}. I felt more relaxed afterward, especially around ${relief}. ${detail} ${keyword}`
+        `${mood}. I felt less tension in ${relief}.`
       ];
 
       return shapes[state.variant % shapes.length];
